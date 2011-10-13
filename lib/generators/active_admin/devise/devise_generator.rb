@@ -2,11 +2,11 @@ module ActiveAdmin
   module Generators
     class DeviseGenerator < Rails::Generators::NamedBase
       desc "Creates an admin user and uses Devise for authentication"
-
       argument :name, :type => :string, :default => "AdminUser"
 
       class_option  :registerable, :type => :boolean, :default => false,
                     :desc => "Should the generated resource be registerable?"
+      class_option :orm, default: "active_record", desc: "orm used to generate model"
 
       def install_devise
         require 'devise'
@@ -19,7 +19,7 @@ module ActiveAdmin
       end
 
       def create_admin_user
-        invoke "devise", [name]
+        invoke "devise", [name, "--orm=#{options.orm}"]
       end
 
       def remove_registerable_from_model
@@ -38,7 +38,7 @@ module ActiveAdmin
         # Don't assume that we have a migration!
         devise_migrations = Dir["db/migrate/*_devise_create_#{table_name}.rb"]
         if devise_migrations.size > 0
-          inject_into_file  Dir["db/migrate/*_devise_create_#{table_name}.rb"].first, 
+          inject_into_file  Dir["db/migrate/*_devise_create_#{table_name}.rb"].first,
                             "# Create a default user\n    #{class_name}.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password')\n\n    ",
                             :before => "add_index :#{table_name}, :email"
         end

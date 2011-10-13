@@ -1,10 +1,3 @@
-desc "Creates a test rails app for the specs to run against"
-task :setup do
-  require 'rails/version'
-  system("mkdir spec/rails") unless File.exists?("spec/rails")
-  system "bundle exec rails new spec/rails/rails-#{Rails::VERSION::STRING} -m spec/support/rails_template.rb"
-end
-
 namespace :test do
   desc "Run against the important versions of rails"
   task :major_rails_versions do
@@ -21,6 +14,17 @@ namespace :test do
     cmd "./script/use_rails #{current_version}" if current_version
   end
 
+  desc "Creates a test rails app for the specs to run against"
+  task :setup do
+    require 'rails/version'
+    system("mkdir spec/rails") unless File.exists?("spec/rails")
+    system "bundle exec rails new spec/rails/rails-#{Rails::VERSION::STRING} -m spec/support/rails_template.rb"
+  end
+
+  desc "Clean rails app used for specs"
+  task :clean do
+    system "rm -rfv spec/rails"
+  end
 end
 
 # Run specs and cukes

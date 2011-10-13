@@ -102,7 +102,7 @@ Spork.prefork do
 
   # Create the test app if it doesn't exists
   unless File.exists?(ENV['RAILS_ROOT'])
-    system 'rake setup'
+    system 'rake test:setup'
   end
 
   # Ensure the Active Admin load path is happy
@@ -111,7 +111,6 @@ Spork.prefork do
   ActiveAdmin.application.load_paths = [ENV['RAILS_ROOT'] + "/app/admin"]
 
   require ENV['RAILS_ROOT'] + '/config/environment'
-  require 'rspec/rails'
 
   # Setup Some Admin stuff for us to play with
   include ActiveAdminIntegrationSpecHelper
@@ -127,6 +126,7 @@ Spork.prefork do
   # test for the presence of an asset file
   ENV["RAILS_ASSET_ID"] = ''
 
+  require 'rspec/rails'
   RSpec.configure do |config|
     config.use_transactional_fixtures = true
     config.use_instantiated_fixtures = false
