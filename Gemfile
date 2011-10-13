@@ -24,6 +24,7 @@ group :development, :test do
   gem 'haml',           '~> 3.1.1', :require => false
   gem 'yard'
   gem 'rdiscount' # For yard
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :test do
@@ -37,4 +38,7 @@ group :test do
   gem 'launchy'
   gem 'jslint_on_rails',    '~> 1.0.6'
   gem 'guard-rspec'
+
+  gem "guard-spork"
+  gem 'growl'
 end
