@@ -1,17 +1,21 @@
 # Rails template to build the sample app for specs
 
+# XXX had trouble with mongoid being required in test group
+# mongoid forces config.orm = :mongoid, then each model is mongoid
+# --orm is being explicited all over
+
 # Create a cucumber database and environment
 copy_file File.expand_path('../templates/cucumber.rb', __FILE__), "config/environments/cucumber.rb"
 gsub_file 'config/database.yml', /^test:.*\n/, "test: &test\n"
 gsub_file 'config/database.yml', /\z/, "\ncucumber:\n  <<: *test\n  database: db/cucumber.sqlite3"
 
 # Generate some test models
-generate :model, "post title:string body:text published_at:datetime author_id:integer category_id:integer"
+generate :model, "post title:string body:text published_at:datetime author_id:integer category_id:integer --orm=active_record"
 inject_into_file 'app/models/post.rb', "  belongs_to :author, :class_name => 'User'\n  belongs_to :category\n  accepts_nested_attributes_for :author\n", :after => "class Post < ActiveRecord::Base\n"
-generate :model, "user type:string first_name:string last_name:string username:string age:integer"
+generate :model, "user type:string first_name:string last_name:string username:string age:integer --orm=active_record "
 inject_into_file 'app/models/user.rb', "  has_many :posts, :foreign_key => 'author_id'\n", :after => "class User < ActiveRecord::Base\n"
-generate :model, "publisher --migration=false --parent=User"
-generate :model, 'category name:string description:text'
+generate :model, "publisher --migration=false --parent=User --orm=active_record "
+generate :model, 'category name:string description:text --orm=active_record '
 inject_into_file 'app/models/category.rb', "  has_many :posts\n", :after => "class Category < ActiveRecord::Base\n"
 
 # Add our local Active Admin to the load path
@@ -22,7 +26,7 @@ run "rm -r test"
 run "rm -r spec"
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-generate :'active_admin:install'
+generate :'active_admin:install', '--orm=active_record'
 
 # Setup a root path for devise
 route "root :to => 'admin/dashboard#index'"

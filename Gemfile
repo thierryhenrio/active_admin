@@ -30,6 +30,7 @@ end
 group :test do
   gem 'rspec',          '~> 2.6.0'
   gem 'rspec-rails',    '~> 2.6.0'
+  gem 'generator_spec'
   gem 'capybara',       '1.0.0'
   gem 'cucumber',       '0.10.6'
   gem 'cucumber-rails', '0.5.2'
