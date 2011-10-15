@@ -108,6 +108,10 @@ Spork.prefork do
   # Ensure the Active Admin load path is happy
   require 'rails'
   require 'active_admin'
+
+  # require orm, this is done in initializer
+  require 'active_admin/orm/active_record'
+  require 'active_admin/orm/mongoid'
   ActiveAdmin.application.load_paths = [ENV['RAILS_ROOT'] + "/app/admin"]
 
   require ENV['RAILS_ROOT'] + '/config/environment'

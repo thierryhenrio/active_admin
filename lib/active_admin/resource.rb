@@ -72,7 +72,7 @@ module ActiveAdmin
 
 
     def resource_table_name
-      resource.quoted_table_name
+      resource.to_adapter.resource_table_name
     end
 
     # Returns a properly formatted controller name for this

@@ -75,6 +75,11 @@ ActiveAdmin.setup do |config|
   # Default:
   # config.logout_link_method = :get
 
+  # ORMs
+  # require 'active_admin/orm/#{orm}'
+  # supported orms are : active_record, mongoid
+  #
+  require 'active_admin/orm/active_record'
 
   # == Admin Comments
   #

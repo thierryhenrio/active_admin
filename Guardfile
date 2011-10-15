@@ -1,6 +1,6 @@
 # More info at https://github.com/guard/guard#readme
 
-guard 'spork', cucumber: false do
+guard 'spork', cucumber: false, wait: 40 do
   watch('spec/spec_helper.rb')
   watch(%r{^spec/support/.+\.rb$})
 end

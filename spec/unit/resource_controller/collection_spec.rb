@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'active_admin/resource_controller'
 
 describe ActiveAdmin::ResourceController::Collection do
   let(:params) do
@@ -15,10 +16,11 @@ describe ActiveAdmin::ResourceController::Collection do
 
   describe ActiveAdmin::ResourceController::Collection::Search do
     let(:params){ {:q => {} }}
-    it "should call the metasearch method" do
-      chain = mock("ChainObj")
-      chain.should_receive(:metasearch).with(params[:q]).once.and_return(Post.search)
-      controller.send :search, chain
+    it "should call the search method of adapter" do
+      adapter = mock
+      Post.stub(:to_adapter) { adapter }
+      adapter.should_receive(:search).with(controller, params[:q]).once.and_return([Post.first])
+      controller.send :search, Post
     end
   end
 

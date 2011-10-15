@@ -68,8 +68,9 @@ module ActiveAdmin
         end
 
         def search(chain)
-          @search = chain.metasearch(clean_search_params(params[:q]))
-          @search.relation
+          # see implementations in active_admin/orm
+          # previous one (active_record) is moved there
+          chain.to_adapter.search(self, clean_search_params(params[:q]))
         end
 
         def clean_search_params(search_params)
