@@ -26,6 +26,7 @@ module ActiveAdmin
 
       def add_default_sidebar_sections
         self.sidebar_sections << ActiveAdmin::SidebarSection.new(:filters, :only => :index) do
+          # XXX wants an @search ivar
           active_admin_filters_form_for assigns["search"], filters_config
         end
       end

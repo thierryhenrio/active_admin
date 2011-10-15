@@ -43,3 +43,9 @@ group :test do
   gem "guard-spork"
   gem 'growl'
 end
+
+group :mongoid do
+  gem 'mongoid'
+  gem 'bson_ext'
+end
+

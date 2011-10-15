@@ -4,6 +4,7 @@ require 'kaminari'
 require 'sass'
 require 'active_admin/arbre'
 require 'active_admin/engine'
+require 'orm_adapter'
 
 module ActiveAdmin
 
