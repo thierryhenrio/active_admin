@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'integration_spec_helper'
 
 describe_with_capybara "Belongs To" do
 

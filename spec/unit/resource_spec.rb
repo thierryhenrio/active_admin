@@ -1,4 +1,5 @@
-require 'spec_helper' 
+require 'spec_helper'
+require 'integration_spec_helper'
 
 module ActiveAdmin
   describe Resource do
@@ -83,7 +84,7 @@ module ActiveAdmin
         end.parent_menu_item_name.should == "Blog"
       end
     end
-    
+
     describe "menu item priority" do
       it "should be 10 when not set" do
         config.menu_item_priority.should == 10
@@ -93,7 +94,7 @@ module ActiveAdmin
         config.menu_item_priority.should == 2
       end
     end
-    
+
     describe "menu item display if" do
       it "should be a proc always returning true if not set" do
         config.menu_item_display_if.should be_instance_of(Proc)

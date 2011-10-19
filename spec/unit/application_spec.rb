@@ -7,6 +7,7 @@ describe ActiveAdmin::Application do
     ActiveAdmin::Application.new.tap do |app|
       # Manually override the load paths becuase RSpec messes these up
       app.load_paths = [File.expand_path('app/admin', Rails.root)]
+      app.prepare!
     end
   end
 
@@ -30,7 +31,7 @@ describe ActiveAdmin::Application do
     application.site_title = "New Title"
     application.site_title.should == "New Title"
   end
-  
+
   it "should store the site's title link" do
     application.site_title_link.should == ""
   end
@@ -53,7 +54,7 @@ describe ActiveAdmin::Application do
     application.view_factory.should be_an_instance_of(ActiveAdmin::ViewFactory)
   end
 
-  it "should have deprecated admin notes by default" do 
+  it "should have deprecated admin notes by default" do
     application.admin_notes.should be_nil
   end
 
