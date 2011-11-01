@@ -36,7 +36,7 @@ module ActiveAdmin
       # Returns the scope for which we are currently searching. If no search is available
       # it returns the first scope
       def current_filter
-        filters[1..-1].inject(filters.first){|a,b| @object.send(b[1].to_sym) ? b : a }[1]
+        filters[1..-1].inject(filters.first){|a,b| @object && @object.send(b[1].to_sym) ? b : a }[1]
       end
 
       def filters

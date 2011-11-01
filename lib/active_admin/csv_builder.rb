@@ -15,8 +15,8 @@ module ActiveAdmin
     def self.default_for_resource(resource)
       new.tap do |csv_builder|
         csv_builder.column(:id)
-        resource.content_columns.each do |content_column|
-          csv_builder.column(content_column.name.to_sym)
+        resource.to_adapter.column_names.each do |content_column|
+          csv_builder.column(content_column.to_sym) if content_column != 'id' && content_column !~ /\w+\_id$/
         end
       end
     end

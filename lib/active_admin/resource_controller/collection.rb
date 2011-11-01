@@ -52,7 +52,11 @@ module ActiveAdmin
             table  = active_admin_config.resource_table_name
             table_column = (column =~ /\./) ? column : "#{table}.#{column}"
 
-            chain.order("#{table_column} #{order}")
+            if chain.respond_to?(:order)
+              chain.order("#{table_column} #{order}")
+            else
+              chain.to_adapter.find_all(:order => [column, order.to_sym])
+            end
           else
             chain # just return the chain
           end
@@ -70,7 +74,7 @@ module ActiveAdmin
         def search(chain)
           # see implementations in active_admin/orm
           # previous one (active_record) is moved there
-          chain.to_adapter.search(self, clean_search_params(params[:q]))
+          chain.to_adapter.search(self, clean_search_params(params[:q]), chain)
         end
 
         def clean_search_params(search_params)

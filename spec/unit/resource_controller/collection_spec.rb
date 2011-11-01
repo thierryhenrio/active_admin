@@ -19,7 +19,7 @@ describe ActiveAdmin::ResourceController::Collection do
     it "should call the search method of adapter" do
       adapter = mock
       Post.stub(:to_adapter) { adapter }
-      adapter.should_receive(:search).with(controller, params[:q]).once.and_return([Post.first])
+      adapter.should_receive(:search).with(controller, params[:q], Post).once.and_return([Post.first])
       controller.send :search, Post
     end
   end

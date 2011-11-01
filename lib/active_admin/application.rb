@@ -177,6 +177,7 @@ module ActiveAdmin
 
     def skip_before_filter(*args, &block)
       ResourceController.skip_before_filter(*args, &block)
+      ActiveAdmin::Devise::SessionsController.skip_before_filter(*args, &block)
     end
 
     def after_filter(*args, &block)

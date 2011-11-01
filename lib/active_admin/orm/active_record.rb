@@ -5,12 +5,12 @@ class ActiveRecord::Base::OrmAdapter
     klass.quoted_table_name
   end
 
-  def search(controller, q)
+  def search(controller, q, chain)
     # extracted from active_admin/resource_controller/collection.rb
     # even uglier than original !!
     # controller.@search is expected later in active_admin/resource/sidebars.rb
     # XXX
-    search = klass.search(q)
+    search = chain.metasearch(q)
     controller.instance_variable_set(:@search, search)
     search.relation
   end
